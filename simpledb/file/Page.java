@@ -62,6 +62,19 @@ public class Page {
         return Integer.BYTES + (strlen * (int) bytesPerChar);
     }
 
+    public boolean getBoolean(int offset) {
+        return bb.get(offset) == 1;
+    }
+
+    public void setBoolean(int offset, boolean b) {
+        if (bb.capacity() - offset < 1) {
+            System.out.println("ERROR: boolean " + (b ? "true" : "false") + " does not fit at location " + offset + " of the page");
+        } else {
+            bb.position(offset);
+            bb.put((byte) (b ? 1 : 0));
+        }
+    }
+
     // a package private method, needed by FileMgr
     ByteBuffer contents() {
         bb.position(0);
